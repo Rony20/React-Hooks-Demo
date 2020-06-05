@@ -8,28 +8,12 @@ function Ingredients() {
   const [userIngredients, setUserIngredients] = useState([]);
 
   useEffect(() => {
-    fetch("https://react-hooks-update-f638c.firebaseio.com/ingredients.json")
-      .then((response) => response.json())
-      .then((responseData) => {
-        const loadedIngredients = [];
-        for (let key in responseData) {
-          loadedIngredients.push({
-            id: key,
-            title: responseData[key].title,
-            amount: responseData[key].amount,
-          });
-        }
-        setUserIngredients(loadedIngredients);
-      });
-  }, []);
-
-  useEffect(() => {
     console.log("RENDERING INGREDIENTS");
   });
 
-  const filteredIngredients = (filteredIngredients) => {
+  const filteredIngredients = useCallback((filteredIngredients) => {
     setUserIngredients(filteredIngredients);
-  };
+  }, []); //caches function so it servive rerender cycle.
 
   const addIngredientHandler = (ingredient) => {
     fetch("https://react-hooks-update-f638c.firebaseio.com/ingredients.json", {
